@@ -1,0 +1,812 @@
+/* ============================================
+   个人日志 - 全局样式 (米白主色调 / 手机优先)
+   ============================================ */
+
+:root {
+  --bg: #FAFAF5;
+  --card-bg: #FFFFFF;
+  --text: #333333;
+  --text-secondary: #888888;
+  --accent: #D4A574;
+  --accent-hover: #C49464;
+  --green: #66BB6A;
+  --green-bg: #E8F5E9;
+  --green-border: #B8D8BA;
+  --orange: #FFA726;
+  --pink-bg: #FFE4E1;
+  --pink-border: #F0C0B8;
+  --yellow-bg: #FFFACD;
+  --yellow-border: #E8D880;
+  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font);
+  background: #F0EDE8;
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  /* Prevent pull-to-refresh on mobile */
+  overscroll-behavior: none;
+}
+
+#app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg);
+  position: relative;
+  overflow-x: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+/* ============ Content Area ============ */
+#content {
+  padding-bottom: 80px;
+}
+
+.page {
+  display: none;
+  padding: 16px;
+  animation: fadeIn 0.25s ease;
+}
+
+.page.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============ Page Header ============ */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0 16px;
+}
+
+.page-header .date-display {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.page-header .header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* ============ Icon Buttons ============ */
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: var(--card-bg);
+  color: var(--accent);
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: all 0.2s ease;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.btn-icon:active {
+  transform: scale(0.92);
+  background: #f0f0f0;
+}
+
+.btn-icon.export-btn {
+  font-size: 1.1rem;
+  width: auto;
+  padding: 0 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* ============ Bottom Tab Bar ============ */
+#tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  background: var(--card-bg);
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
+  z-index: 100;
+  padding: 4px 0;
+  padding-bottom: max(4px, env(safe-area-inset-bottom));
+}
+
+.tab-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  gap: 3px;
+}
+
+.tab-btn .tab-icon {
+  font-size: 1.4rem;
+}
+
+.tab-btn.active {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ============ Todo List ============ */
+.todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--card-bg);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.todo-item:active {
+  background: #f8f8f8;
+}
+
+.todo-check {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  font-size: 0.8rem;
+  color: transparent;
+}
+
+.todo-check.done {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+
+.todo-text {
+  flex: 1;
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+
+.todo-text.done {
+  text-decoration: line-through;
+  color: #bbb;
+}
+
+.todo-time {
+  font-size: 0.75rem;
+  color: #ccc;
+  white-space: nowrap;
+}
+
+.todo-empty {
+  text-align: center;
+  color: #ccc;
+  padding: 60px 0;
+  font-size: 0.9rem;
+}
+
+.todo-empty .empty-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+/* ============ Sections (Warehouse) ============ */
+.section-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 16px 0 8px;
+  padding-left: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.section-title .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.section-title .dot.pink { background: var(--pink-border); }
+.section-title .dot.yellow { background: var(--yellow-border); }
+
+/* ============ Log / Excerpt Cards ============ */
+.entry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.entry-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  border-left: 4px solid transparent;
+}
+
+.entry-card.log-card {
+  border-left-color: var(--pink-border);
+}
+
+.entry-card.excerpt-card {
+  border-left-color: var(--yellow-border);
+}
+
+.entry-card .entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.entry-card .entry-time {
+  font-size: 0.75rem;
+  color: #bbb;
+}
+
+.entry-card .entry-text {
+  font-size: 0.9rem;
+  color: var(--text);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.6;
+}
+
+.entry-card .entry-text.expanded {
+  -webkit-line-clamp: unset;
+}
+
+/* ============ Search Bar ============ */
+.search-bar {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 16px 10px 36px;
+  border: 1px solid #e8e8e8;
+  border-radius: 24px;
+  font-size: 0.9rem;
+  background: var(--card-bg);
+  font-family: var(--font);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-bar input:focus {
+  border-color: var(--accent);
+}
+
+.search-bar .search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ccc;
+  font-size: 1rem;
+}
+
+/* ============ Calendar ============ */
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 8px 0 16px;
+}
+
+.calendar-header .month-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  min-width: 120px;
+  text-align: center;
+}
+
+.calendar-header .month-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--card-bg);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  color: var(--text);
+  transition: all 0.2s;
+}
+
+.calendar-header .month-btn:active {
+  background: #f0f0f0;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  text-align: center;
+}
+
+.calendar-grid .day-header {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+  font-weight: 500;
+}
+
+.calendar-grid .day-header.weekend {
+  color: #e0a0a0;
+}
+
+.calendar-cell {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.15s;
+}
+
+.calendar-cell:hover,
+.calendar-cell:active {
+  background: #f0ede8;
+}
+
+.calendar-cell.today {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.calendar-cell.other-month {
+  color: #ddd;
+  pointer-events: none;
+}
+
+.calendar-cell .dots {
+  display: flex;
+  gap: 3px;
+  position: absolute;
+  bottom: 4px;
+}
+
+.calendar-cell .dot-indicator {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+.calendar-cell .dot-indicator.green { background: var(--green); }
+.calendar-cell .dot-indicator.orange { background: var(--orange); }
+
+/* ============ Modal ============ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.35);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fadeOverlay 0.2s ease;
+}
+
+@keyframes fadeOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-sheet {
+  background: var(--bg);
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  max-height: 85dvh;
+  border-radius: 20px 20px 0 0;
+  padding: 20px 16px;
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+  box-shadow: var(--shadow-lg);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.modal-sheet .modal-handle {
+  width: 36px;
+  height: 4px;
+  background: #ddd;
+  border-radius: 2px;
+  margin: 0 auto 16px;
+}
+
+.modal-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* ============ Input Modal ============ */
+.input-modal textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  border: 2px solid #e0e0e0;
+  font-size: 0.95rem;
+  font-family: var(--font);
+  resize: vertical;
+  outline: none;
+  line-height: 1.7;
+  transition: border-color 0.2s;
+}
+
+.input-modal textarea:focus {
+  border-color: var(--accent);
+}
+
+.input-modal.log-modal textarea {
+  background: var(--pink-bg);
+  border-color: var(--pink-border);
+}
+
+.input-modal.excerpt-modal textarea {
+  background: var(--yellow-bg);
+  border-color: var(--yellow-border);
+}
+
+.input-modal .modal-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+/* ============ Buttons ============ */
+.btn {
+  padding: 10px 20px;
+  border-radius: 24px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font);
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #eee;
+  color: var(--text);
+}
+
+.btn-danger {
+  background: #ff5252;
+  color: #fff;
+}
+
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  border-radius: 16px;
+}
+
+/* ============ Context Menu (长按) ============ */
+.context-menu {
+  position: fixed;
+  z-index: 300;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  min-width: 120px;
+  animation: scaleIn 0.15s ease;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.context-menu .menu-item {
+  padding: 12px 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.15s;
+}
+
+.context-menu .menu-item:last-child {
+  border-bottom: none;
+}
+
+.context-menu .menu-item:active {
+  background: #f5f5f5;
+}
+
+.context-menu .menu-item.danger {
+  color: #ff5252;
+}
+
+/* ============ Day Detail Popup ============ */
+.day-detail .detail-section {
+  margin-bottom: 16px;
+}
+
+.day-detail .detail-section h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.day-detail .detail-section.todo-section h3 {
+  background: var(--green-bg);
+  color: #388E3C;
+}
+
+.day-detail .detail-section.log-section h3 {
+  background: var(--pink-bg);
+  color: #C07060;
+}
+
+.day-detail .detail-section.excerpt-section h3 {
+  background: var(--yellow-bg);
+  color: #A09030;
+}
+
+.day-detail .detail-item {
+  padding: 10px 12px;
+  background: var(--card-bg);
+  border-radius: var(--radius-sm);
+  margin-bottom: 6px;
+  font-size: 0.88rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.day-detail .detail-item .item-time {
+  font-size: 0.7rem;
+  color: #bbb;
+  margin-right: 8px;
+}
+
+.day-detail .detail-item.todo-done {
+  color: #999;
+  text-decoration: line-through;
+}
+
+.day-detail .detail-item.todo-undone {
+  color: var(--text);
+}
+
+.day-detail .detail-empty {
+  color: #ccc;
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 12px;
+}
+
+/* ============ Export Modal ============ */
+.export-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.export-options label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.export-options input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--accent);
+}
+
+.date-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.date-range input[type="date"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.date-range input[type="date"]:focus {
+  border-color: var(--accent);
+}
+
+.date-range span {
+  color: var(--text-secondary);
+}
+
+/* ============ Toast ============ */
+.toast {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 400;
+  background: #333;
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 24px;
+  font-size: 0.85rem;
+  animation: toastIn 0.3s ease, toastOut 0.3s ease 1.5s forwards;
+  pointer-events: none;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes toastOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* ============ Add Menu Popover ============ */
+.add-menu {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  z-index: 150;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: scaleIn 0.15s ease;
+}
+
+.add-menu .menu-item {
+  padding: 12px 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.add-menu .menu-item:active {
+  background: #f5f5f5;
+}
+
+.add-menu .menu-item .menu-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.add-menu .menu-item .menu-dot.pink {
+  background: var(--pink-border);
+}
+
+.add-menu .menu-item .menu-dot.yellow {
+  background: var(--yellow-border);
+}
+
+/* ============ Entry Detail View ============ */
+.entry-full {
+  padding: 8px 0;
+}
+
+.entry-full .full-meta {
+  font-size: 0.8rem;
+  color: #bbb;
+  margin-bottom: 12px;
+}
+
+.entry-full .full-content {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

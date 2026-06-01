@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#FAFAF5">
+  <title>个人日志</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📔</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- ==================== 内容区 ==================== -->
+    <main id="content">
+
+      <!-- ===== 首页：待办 ===== -->
+      <section id="page-todo" class="page active">
+        <div class="page-header">
+          <span class="date-display" id="todo-date">—</span>
+          <div class="header-actions">
+            <button class="btn-icon" id="btn-add-todo" title="添加待办">＋</button>
+          </div>
+        </div>
+        <ul class="todo-list" id="todo-list"></ul>
+        <div class="todo-empty" id="todo-empty">
+          <span class="empty-icon">☕️</span>
+          今天还没有待办事项<br>点击右上角 ＋ 添加
+        </div>
+      </section>
+
+      <!-- ===== 个人仓库 ===== -->
+      <section id="page-warehouse" class="page">
+        <div class="page-header">
+          <span class="date-display" id="warehouse-date">—</span>
+          <div class="header-actions" style="position:relative;">
+            <button class="btn-icon" id="btn-add-entry" title="添加记录">＋</button>
+            <div class="add-menu hidden" id="add-menu">
+              <div class="menu-item" data-type="log">
+                <span class="menu-dot pink"></span> 个人日志
+              </div>
+              <div class="menu-item" data-type="excerpt">
+                <span class="menu-dot yellow"></span> 文字摘抄
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="搜索日志或摘抄..." autocomplete="off">
+        </div>
+        <div id="warehouse-content"></div>
+        <div class="todo-empty" id="warehouse-empty">
+          <span class="empty-icon">📝</span>
+          还没有记录<br>点击右上角 ＋ 开始记录
+        </div>
+      </section>
+
+      <!-- ===== 日历 ===== -->
+      <section id="page-calendar" class="page">
+        <div class="page-header">
+          <span class="date-display">📅 日历</span>
+          <div class="header-actions">
+            <button class="btn-icon export-btn" id="btn-export" title="导出">📤 导出</button>
+          </div>
+        </div>
+        <div class="calendar-header">
+          <button class="month-btn" id="btn-prev-month">◀</button>
+          <span class="month-title" id="month-title"></span>
+          <button class="month-btn" id="btn-next-month">▶</button>
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </section>
+
+    </main>
+
+    <!-- ==================== 底部导航 ==================== -->
+    <nav id="tab-bar">
+      <button class="tab-btn active" data-page="todo">
+        <span class="tab-icon">☐</span>
+        <span>待办</span>
+      </button>
+      <button class="tab-btn" data-page="warehouse">
+        <span class="tab-icon">📦</span>
+        <span>仓库</span>
+      </button>
+      <button class="tab-btn" data-page="calendar">
+        <span class="tab-icon">📅</span>
+        <span>日历</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ==================== 添加待办输入弹窗 ==================== -->
+  <div class="modal-overlay hidden" id="modal-todo-input">
+    <div class="modal-sheet input-modal">
+      <div class="modal-handle"></div>
+      <div class="modal-title">添加待办事项</div>
+      <textarea id="input-todo" placeholder="输入待办事项..." rows="3"></textarea>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="btn-cancel-todo">取消</button>
+        <button class="btn btn-primary" id="btn-save-todo">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 添加日志/摘抄输入弹窗 ==================== -->
+  <div class="modal-overlay hidden" id="modal-entry-input">
+    <div class="modal-sheet input-modal" id="entry-modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title" id="entry-modal-title">个人日志</div>
+      <textarea id="input-entry" placeholder="写下你想记录的内容..." rows="6"></textarea>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="btn-cancel-entry">取消</button>
+        <button class="btn btn-primary" id="btn-save-entry">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 日历日期详情弹窗 ==================== -->
+  <div class="modal-overlay hidden" id="modal-day-detail">
+    <div class="modal-sheet day-detail">
+      <div class="modal-handle"></div>
+      <div class="modal-title" id="day-detail-title"></div>
+      <div id="day-detail-content"></div>
+    </div>
+  </div>
+
+  <!-- ==================== 导出选项弹窗 ==================== -->
+  <div class="modal-overlay hidden" id="modal-export">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title">导出数据</div>
+      <div class="export-options" id="export-options">
+        <label><input type="checkbox" value="log" checked> 📝 个人日志</label>
+        <label><input type="checkbox" value="excerpt" checked> 📋 文字摘抄</label>
+      </div>
+      <div class="date-range">
+        <input type="date" id="export-date-start">
+        <span>至</span>
+        <input type="date" id="export-date-end">
+      </div>
+      <div class="modal-actions" style="justify-content:flex-end;margin-top:16px;">
+        <button class="btn btn-secondary" id="btn-cancel-export">取消</button>
+        <button class="btn btn-primary" id="btn-confirm-export">导出 .docx</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 长按上下文菜单 ==================== -->
+  <div class="context-menu hidden" id="context-menu">
+    <div class="menu-item" data-action="edit">✏️ 编辑</div>
+    <div class="menu-item danger" data-action="delete">🗑️ 删除</div>
+  </div>
+
+  <!-- ==================== Toast ==================== -->
+  <div class="toast hidden" id="toast"></div>
+
+  <!-- JSZip CDN（仅导出 docx 时需要网络） -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+  <!-- ==================== JS 文件 ==================== -->
+  <script src="js/storage.js"></script>
+  <script src="js/todo.js"></script>
+  <script src="js/warehouse.js"></script>
+  <script src="js/calendar.js"></script>
+  <script src="js/export.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
