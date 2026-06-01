@@ -33,6 +33,7 @@
 html {
   font-size: 16px;
   -webkit-tap-highlight-color: transparent;
+  height: 100%;
 }
 
 body {
@@ -41,25 +42,24 @@ body {
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   -webkit-font-smoothing: antialiased;
-  /* Prevent pull-to-refresh on mobile */
-  overscroll-behavior: none;
+  overflow-x: hidden;
 }
 
 #app {
+  width: 100%;
   max-width: 480px;
   margin: 0 auto;
   min-height: 100vh;
-  min-height: 100dvh;
+  min-height: -webkit-fill-available;
   background: var(--bg);
   position: relative;
-  overflow-x: hidden;
-  box-shadow: var(--shadow-lg);
 }
 
 /* ============ Content Area ============ */
 #content {
-  padding-bottom: 80px;
+  padding-bottom: 75px;
 }
 
 .page {
@@ -83,6 +83,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 8px 0 16px;
+  position: relative;
 }
 
 .page-header .date-display {
@@ -95,12 +96,14 @@ body {
   display: flex;
   gap: 8px;
   align-items: center;
+  position: relative;
 }
 
 /* ============ Icon Buttons ============ */
 .btn-icon {
   width: 40px;
   height: 40px;
+  min-width: 40px;
   border-radius: 50%;
   border: none;
   background: var(--card-bg);
@@ -114,6 +117,7 @@ body {
   transition: all 0.2s ease;
   -webkit-user-select: none;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn-icon:active {
@@ -122,9 +126,9 @@ body {
 }
 
 .btn-icon.export-btn {
-  font-size: 1.1rem;
   width: auto;
-  padding: 0 12px;
+  min-width: auto;
+  padding: 10px 16px;
   border-radius: 20px;
   font-weight: 600;
   font-size: 0.85rem;
@@ -134,10 +138,11 @@ body {
 #tab-bar {
   position: fixed;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
   width: 100%;
   max-width: 480px;
+  margin: 0 auto;
   display: flex;
   background: var(--card-bg);
   box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
@@ -160,6 +165,7 @@ body {
   cursor: pointer;
   transition: color 0.2s;
   gap: 3px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .tab-btn .tab-icon {
@@ -221,6 +227,7 @@ body {
   flex: 1;
   font-size: 0.95rem;
   word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .todo-text.done {
@@ -232,6 +239,7 @@ body {
   font-size: 0.75rem;
   color: #ccc;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .todo-empty {
@@ -262,6 +270,7 @@ body {
 .section-title .dot {
   width: 8px;
   height: 8px;
+  min-width: 8px;
   border-radius: 50%;
   display: inline-block;
 }
@@ -284,6 +293,7 @@ body {
   transition: all 0.2s;
   box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   border-left: 4px solid transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .entry-card.log-card {
@@ -314,10 +324,7 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: 1.6;
-}
-
-.entry-card .entry-text.expanded {
-  -webkit-line-clamp: unset;
+  word-break: break-word;
 }
 
 /* ============ Search Bar ============ */
@@ -336,6 +343,7 @@ body {
   font-family: var(--font);
   outline: none;
   transition: border-color 0.2s;
+  -webkit-appearance: none;
 }
 
 .search-bar input:focus {
@@ -349,6 +357,7 @@ body {
   transform: translateY(-50%);
   color: #ccc;
   font-size: 1rem;
+  pointer-events: none;
 }
 
 /* ============ Calendar ============ */
@@ -356,24 +365,25 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 12px;
   padding: 8px 0 16px;
 }
 
 .calendar-header .month-title {
   font-size: 1.1rem;
   font-weight: 600;
-  min-width: 120px;
+  min-width: 110px;
   text-align: center;
 }
 
 .calendar-header .month-btn {
   width: 36px;
   height: 36px;
+  min-width: 36px;
   border-radius: 50%;
   border: none;
   background: var(--card-bg);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -381,6 +391,7 @@ body {
   box-shadow: 0 1px 4px rgba(0,0,0,0.06);
   color: var(--text);
   transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .calendar-header .month-btn:active {
@@ -390,12 +401,12 @@ body {
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
+  gap: 2px;
   text-align: center;
 }
 
 .calendar-grid .day-header {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--text-secondary);
   padding: 8px 0;
   font-weight: 500;
@@ -406,19 +417,19 @@ body {
 }
 
 .calendar-cell {
-  aspect-ratio: 1;
+  aspect-ratio: 1 / 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   border-radius: 50%;
   cursor: pointer;
   position: relative;
   transition: background 0.15s;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.calendar-cell:hover,
 .calendar-cell:active {
   background: #f0ede8;
 }
@@ -436,27 +447,28 @@ body {
 
 .calendar-cell .dots {
   display: flex;
-  gap: 3px;
+  gap: 2px;
   position: absolute;
-  bottom: 4px;
+  bottom: 2px;
 }
 
 .calendar-cell .dot-indicator {
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
 }
 
 .calendar-cell .dot-indicator.green { background: var(--green); }
 .calendar-cell .dot-indicator.orange { background: var(--orange); }
 
-/* ============ Modal ============ */
+/* ============ Modal Overlay ============ */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  height: -webkit-fill-available;
   background: rgba(0,0,0,0.35);
   z-index: 200;
   display: flex;
@@ -478,12 +490,13 @@ body {
   background: var(--bg);
   width: 100%;
   max-width: 480px;
-  max-height: 85vh;
-  max-height: 85dvh;
+  max-height: 80vh;
+  max-height: 80dvh;
   border-radius: 20px 20px 0 0;
   padding: 20px 16px;
   padding-bottom: max(20px, env(safe-area-inset-bottom));
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   animation: slideUp 0.3s ease;
   box-shadow: var(--shadow-lg);
 }
@@ -511,7 +524,7 @@ body {
 /* ============ Input Modal ============ */
 .input-modal textarea {
   width: 100%;
-  min-height: 150px;
+  min-height: 120px;
   padding: 14px;
   border-radius: var(--radius-sm);
   border: 2px solid #e0e0e0;
@@ -521,6 +534,7 @@ body {
   outline: none;
   line-height: 1.7;
   transition: border-color 0.2s;
+  -webkit-appearance: none;
 }
 
 .input-modal textarea:focus {
@@ -554,6 +568,7 @@ body {
   cursor: pointer;
   transition: all 0.2s;
   font-family: var(--font);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn:active {
@@ -654,6 +669,7 @@ body {
   margin-bottom: 6px;
   font-size: 0.88rem;
   box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  word-break: break-word;
 }
 
 .day-detail .detail-item .item-time {
@@ -697,6 +713,7 @@ body {
 .export-options input[type="checkbox"] {
   width: 20px;
   height: 20px;
+  min-width: 20px;
   accent-color: var(--accent);
 }
 
@@ -709,12 +726,14 @@ body {
 
 .date-range input[type="date"] {
   flex: 1;
-  padding: 10px;
+  min-width: 0;
+  padding: 10px 8px;
   border: 1px solid #e0e0e0;
   border-radius: var(--radius-sm);
   font-family: var(--font);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   outline: none;
+  -webkit-appearance: none;
 }
 
 .date-range input[type="date"]:focus {
@@ -723,6 +742,7 @@ body {
 
 .date-range span {
   color: var(--text-secondary);
+  flex-shrink: 0;
 }
 
 /* ============ Toast ============ */
@@ -739,6 +759,7 @@ body {
   font-size: 0.85rem;
   animation: toastIn 0.3s ease, toastOut 0.3s ease 1.5s forwards;
   pointer-events: none;
+  white-space: nowrap;
 }
 
 @keyframes toastIn {
@@ -754,7 +775,7 @@ body {
 /* ============ Add Menu Popover ============ */
 .add-menu {
   position: absolute;
-  top: 48px;
+  top: 44px;
   right: 0;
   z-index: 150;
   background: #fff;
@@ -773,6 +794,7 @@ body {
   gap: 8px;
   transition: background 0.15s;
   white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .add-menu .menu-item:active {
@@ -782,6 +804,7 @@ body {
 .add-menu .menu-item .menu-dot {
   width: 10px;
   height: 10px;
+  min-width: 10px;
   border-radius: 50%;
 }
 
@@ -809,4 +832,31 @@ body {
   line-height: 1.8;
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+/* ============ Mobile Tweaks ============ */
+@media screen and (max-width: 380px) {
+  .calendar-grid {
+    gap: 1px;
+  }
+
+  .calendar-cell {
+    font-size: 0.8rem;
+  }
+
+  .calendar-cell .dot-indicator {
+    width: 3px;
+    height: 3px;
+  }
+
+  .calendar-grid .day-header {
+    font-size: 0.65rem;
+  }
+
+  .btn-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    font-size: 1.3rem;
+  }
 }
