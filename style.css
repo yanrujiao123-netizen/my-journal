@@ -49,6 +49,7 @@ body {
   -webkit-font-smoothing: antialiased;
   /* Prevent pull-to-refresh and double-tap zoom */
   overflow-x: hidden;
+  max-width: 100%;
   touch-action: manipulation;
 }
 
@@ -56,17 +57,14 @@ body {
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
-  min-height: 100vh;
   min-height: 100dvh;
-  min-height: -webkit-fill-available;
-  min-height: calc(var(--vh, 1vh) * 100);
   background: var(--bg);
   position: relative;
 }
 
 /* ============ Content Area ============ */
 #content {
-  padding-bottom: 75px;
+  padding-bottom: 85px;
 }
 
 .page {
@@ -408,7 +406,7 @@ body {
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
+  gap: 1px;
   text-align: center;
 }
 
@@ -435,6 +433,8 @@ body {
   position: relative;
   transition: background 0.15s;
   -webkit-tap-highlight-color: transparent;
+  overflow: visible;
+  margin: 2px 0;
 }
 
 .calendar-cell:active {
@@ -456,12 +456,12 @@ body {
   display: flex;
   gap: 2px;
   position: absolute;
-  bottom: 2px;
+  bottom: 4px;
 }
 
 .calendar-cell .dot-indicator {
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
 }
 
