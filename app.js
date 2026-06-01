@@ -156,6 +156,17 @@ document.addEventListener('contextmenu', (e) => {
 
 // ============ Init ============
 
+// iOS Safari: fix viewport height (100vh bug)
+function setViewportHeight() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+window.addEventListener('resize', setViewportHeight);
+window.addEventListener('orientationchange', () => {
+  setTimeout(setViewportHeight, 100);
+});
+setViewportHeight();
+
 function init() {
   // Set today's dates
   const todayStr = getTodayStr();
