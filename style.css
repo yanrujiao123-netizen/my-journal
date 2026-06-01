@@ -1,5 +1,5 @@
 /* ============================================
-   个人日志 - 全局样式 (米白主色调 / 手机优先)
+   个人日志 - 全局样式 (iPhone 13 Pro 适配 / 390×844pt)
    ============================================ */
 
 :root {
@@ -22,6 +22,7 @@
   --radius: 12px;
   --radius-sm: 8px;
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  /* iPhone 13 Pro safe areas are handled via env() */
 }
 
 * {
@@ -34,7 +35,6 @@ html {
   font-size: 16px;
   -webkit-tap-highlight-color: transparent;
   height: 100%;
-  /* Prevent iOS text size adjust on orientation change */
   -webkit-text-size-adjust: 100%;
 }
 
@@ -47,9 +47,7 @@ body {
   min-height: 100dvh;
   min-height: -webkit-fill-available;
   -webkit-font-smoothing: antialiased;
-  /* Prevent pull-to-refresh and double-tap zoom */
   overflow-x: hidden;
-  max-width: 100%;
   touch-action: manipulation;
 }
 
@@ -57,19 +55,25 @@ body {
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
+  min-height: 100vh;
   min-height: 100dvh;
+  min-height: -webkit-fill-available;
+  min-height: calc(var(--vh, 1vh) * 100);
   background: var(--bg);
   position: relative;
 }
 
 /* ============ Content Area ============ */
 #content {
-  padding-bottom: 85px;
+  /* top: clear the notch/status bar (≈47pt on iPhone 13 Pro) */
+  padding-top: max(0px, env(safe-area-inset-top));
+  /* bottom: tab bar + home indicator */
+  padding-bottom: calc(60px + max(0px, env(safe-area-inset-bottom)));
 }
 
 .page {
   display: none;
-  padding: 16px;
+  padding: 12px 16px;
   animation: fadeIn 0.25s ease;
 }
 
@@ -104,16 +108,16 @@ body {
   position: relative;
 }
 
-/* ============ Icon Buttons ============ */
+/* ============ Icon Buttons (Apple HIG: ≥44pt touch target) ============ */
 .btn-icon {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
   border-radius: 50%;
   border: none;
   background: var(--card-bg);
   color: var(--accent);
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -132,9 +136,10 @@ body {
 
 .btn-icon.export-btn {
   width: auto;
-  min-width: auto;
-  padding: 10px 16px;
-  border-radius: 20px;
+  min-width: 44px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 18px;
   font-weight: 600;
   font-size: 0.85rem;
 }
@@ -152,8 +157,8 @@ body {
   background: var(--card-bg);
   box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
   z-index: 100;
-  padding: 4px 0;
-  padding-bottom: max(4px, env(safe-area-inset-bottom));
+  padding-top: 6px;
+  padding-bottom: max(6px, env(safe-area-inset-bottom));
 }
 
 .tab-btn {
@@ -171,6 +176,8 @@ body {
   transition: color 0.2s;
   gap: 3px;
   -webkit-tap-highlight-color: transparent;
+  /* Minimum touch target area */
+  min-height: 44px;
 }
 
 .tab-btn .tab-icon {
@@ -187,7 +194,7 @@ body {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .todo-item {
@@ -202,6 +209,7 @@ body {
   box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   -webkit-user-select: none;
   user-select: none;
+  min-height: 52px;
 }
 
 .todo-item:active {
@@ -230,7 +238,7 @@ body {
 
 .todo-text {
   flex: 1;
-  font-size: 0.95rem;
+  font-size: 1rem;
   word-break: break-word;
   overflow-wrap: break-word;
 }
@@ -299,6 +307,7 @@ body {
   box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   border-left: 4px solid transparent;
   -webkit-tap-highlight-color: transparent;
+  min-height: 52px;
 }
 
 .entry-card.log-card {
@@ -322,7 +331,7 @@ body {
 }
 
 .entry-card .entry-text {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text);
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -340,9 +349,10 @@ body {
 
 .search-bar input {
   width: 100%;
-  padding: 10px 16px 10px 36px;
+  height: 44px;
+  padding: 0 16px 0 38px;
   border: 1px solid #e8e8e8;
-  border-radius: 24px;
+  border-radius: 22px;
   font-size: 16px;
   background: var(--card-bg);
   font-family: var(--font);
@@ -357,10 +367,10 @@ body {
 
 .search-bar .search-icon {
   position: absolute;
-  left: 12px;
+  left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: #ccc;
+  color: #bbb;
   font-size: 1rem;
   pointer-events: none;
 }
@@ -382,9 +392,9 @@ body {
 }
 
 .calendar-header .month-btn {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
   border-radius: 50%;
   border: none;
   background: var(--card-bg);
@@ -406,7 +416,7 @@ body {
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
+  gap: 2px;
   text-align: center;
 }
 
@@ -427,14 +437,13 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   border-radius: 50%;
   cursor: pointer;
   position: relative;
   transition: background 0.15s;
   -webkit-tap-highlight-color: transparent;
-  overflow: visible;
-  margin: 2px 0;
+  /* 390px - 32px padding - 12px gaps = 346px / 7 ≈ 49.4px per cell */
 }
 
 .calendar-cell:active {
@@ -456,7 +465,7 @@ body {
   display: flex;
   gap: 2px;
   position: absolute;
-  bottom: 4px;
+  bottom: 3px;
 }
 
 .calendar-cell .dot-indicator {
@@ -468,7 +477,7 @@ body {
 .calendar-cell .dot-indicator.green { background: var(--green); }
 .calendar-cell .dot-indicator.orange { background: var(--orange); }
 
-/* ============ Modal Overlay ============ */
+/* ============ Modal Overlay (full screen, covers everything) ============ */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -497,11 +506,12 @@ body {
   background: var(--bg);
   width: 100%;
   max-width: 480px;
-  max-height: 80vh;
-  max-height: 80dvh;
+  max-height: 82vh;
+  max-height: 82dvh;
   border-radius: 20px 20px 0 0;
   padding: 20px 16px;
-  padding-bottom: max(20px, env(safe-area-inset-bottom));
+  /* Bottom padding must clear the home indicator */
+  padding-bottom: max(20px, calc(env(safe-area-inset-bottom) + 12px));
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   animation: slideUp 0.3s ease;
@@ -515,9 +525,9 @@ body {
 
 .modal-sheet .modal-handle {
   width: 36px;
-  height: 4px;
-  background: #ddd;
-  border-radius: 2px;
+  height: 5px;
+  background: #d0d0d0;
+  border-radius: 3px;
   margin: 0 auto 16px;
 }
 
@@ -565,17 +575,20 @@ body {
   margin-top: 12px;
 }
 
-/* ============ Buttons ============ */
+/* ============ Buttons (all ≥44pt height for iOS) ============ */
 .btn {
-  padding: 10px 20px;
+  padding: 12px 22px;
   border-radius: 24px;
   border: none;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
   font-family: var(--font);
   -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .btn:active {
@@ -598,12 +611,13 @@ body {
 }
 
 .btn-sm {
-  padding: 6px 14px;
-  font-size: 0.8rem;
-  border-radius: 16px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  border-radius: 18px;
+  min-height: 36px;
 }
 
-/* ============ Context Menu (长按) ============ */
+/* ============ Context Menu (长按弹出菜单) ============ */
 .context-menu {
   position: fixed;
   z-index: 300;
@@ -611,7 +625,7 @@ body {
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
-  min-width: 120px;
+  min-width: 130px;
   animation: scaleIn 0.15s ease;
 }
 
@@ -621,11 +635,14 @@ body {
 }
 
 .context-menu .menu-item {
-  padding: 12px 20px;
-  font-size: 0.9rem;
+  padding: 14px 22px;
+  font-size: 0.95rem;
   cursor: pointer;
   border-bottom: 1px solid #f0f0f0;
   transition: background 0.15s;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
 }
 
 .context-menu .menu-item:last-child {
@@ -670,11 +687,11 @@ body {
 }
 
 .day-detail .detail-item {
-  padding: 10px 12px;
+  padding: 12px 14px;
   background: var(--card-bg);
   border-radius: var(--radius-sm);
   margin-bottom: 6px;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   box-shadow: 0 1px 2px rgba(0,0,0,0.03);
   word-break: break-word;
 }
@@ -705,22 +722,23 @@ body {
 .export-options {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .export-options label {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   cursor: pointer;
-  padding: 8px 0;
+  padding: 10px 0;
+  min-height: 44px;
 }
 
 .export-options input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  min-width: 20px;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
   accent-color: var(--accent);
 }
 
@@ -734,13 +752,15 @@ body {
 .date-range input[type="date"] {
   flex: 1;
   min-width: 0;
-  padding: 10px 8px;
+  height: 44px;
+  padding: 0 10px;
   border: 1px solid #e0e0e0;
   border-radius: var(--radius-sm);
   font-family: var(--font);
   font-size: 16px;
   outline: none;
   -webkit-appearance: none;
+  background: var(--card-bg);
 }
 
 .date-range input[type="date"]:focus {
@@ -752,10 +772,11 @@ body {
   flex-shrink: 0;
 }
 
-/* ============ Toast ============ */
+/* ============ Toast (below notch, centered) ============ */
 .toast {
   position: fixed;
-  top: 40px;
+  /* Place below the notch area */
+  top: max(50px, calc(env(safe-area-inset-top) + 16px));
   left: 50%;
   transform: translateX(-50%);
   z-index: 400;
@@ -779,10 +800,10 @@ body {
   to { opacity: 0; }
 }
 
-/* ============ Add Menu Popover ============ */
+/* ============ Add Menu Popover (below + button) ============ */
 .add-menu {
   position: absolute;
-  top: 44px;
+  top: 48px;
   right: 0;
   z-index: 150;
   background: #fff;
@@ -793,14 +814,15 @@ body {
 }
 
 .add-menu .menu-item {
-  padding: 12px 20px;
-  font-size: 0.9rem;
+  padding: 14px 22px;
+  font-size: 0.95rem;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   transition: background 0.15s;
   white-space: nowrap;
+  min-height: 48px;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -841,29 +863,25 @@ body {
   word-break: break-word;
 }
 
-/* ============ Mobile Tweaks ============ */
+/* ============ Narrow screen fine-tuning (≤380px) ============ */
 @media screen and (max-width: 380px) {
-  .calendar-grid {
-    gap: 1px;
-  }
-
   .calendar-cell {
     font-size: 0.8rem;
   }
 
   .calendar-cell .dot-indicator {
-    width: 3px;
-    height: 3px;
+    width: 4px;
+    height: 4px;
+  }
+
+  .calendar-cell .dots {
+    bottom: 2px;
   }
 
   .calendar-grid .day-header {
     font-size: 0.65rem;
+    padding: 6px 0;
   }
 
-  .btn-icon {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    font-size: 1.3rem;
-  }
+  .todo-text { font-size: 0.9rem; }
 }
